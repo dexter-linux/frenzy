@@ -1,26 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Kifaru Frenzy</title>
+    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2d3e2d">
-    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/addons/p5.sound.min.js"></script>
     
     <link rel="stylesheet" type="text/css" href="style.css">
-    <meta charset="utf-8" />
-    <title>Kifaru Frenzy</title>
   </head>
   <body>
     <main></main>
+    
     <script src="sketch.js"></script>
+
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('sw.js');
+          navigator.serviceWorker.register('sw.js')
+            .then(registration => {
+              console.log('SW registered successfully');
+            })
+            .catch(error => {
+              // Gracefully handle the 'InvalidStateError' which often happens on fast refreshes
+              if (error.name !== 'InvalidStateError') {
+                console.error('Service Worker registration failed:', error);
+              }
+            });
         });
       }
+
+      // Prevent default touch actions (scrolling/bouncing) for a better game experience
+      document.addEventListener('touchmove', (e) => {
+        if (e.scale !== 1) { e.preventDefault(); }
+      }, { passive: false });
     </script>
   </body>
 </html>
