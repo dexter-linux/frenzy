@@ -1,7 +1,18 @@
 html, body {
   margin: 0;
   padding: 0;
+  overflow: hidden; /* Prevents scrolling */
+  background-color: #000;
+  touch-action: none; /* Prevents default browser touch gestures */
 }
+
 canvas {
   display: block;
+}
+
+/* Style the p5.js button specifically */
+button {
+  font-family: 'Courier New', Courier, monospace;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
